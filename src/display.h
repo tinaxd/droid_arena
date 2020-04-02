@@ -1,12 +1,15 @@
 #pragma once
 
+#include "sprite.h"
 #include <SDL.h>
+#include <memory>
 #include <stdexcept>
+#include <type_traits>
 #include <vector>
+#include "util.h"
 
 namespace da {
 
-class Sprite;
 class DisplayError;
 class Display;
 
@@ -25,13 +28,44 @@ public:
   Display(int width = 1000, int height = 1000);
   ~Display();
 
-  void redraw(const std::vector<const Sprite *> &sprites);
+  template <
+      class S,
+      typename std::enable_if<
+          std::is_base_of<Sprite, typename std::pointer_traits<S>::element_type>::value,
+          int>::type = 0>
+  void redraw(const std::vector<S> &sprites) {
+    clear_draw();
+
+    for (S sprite : sprites) {
+      draw_sprite(deref(sprite).state()->pos(), deref(sprite).state()->radius());
+    }
+
+    update_draw();
+  }
+  
+  template <
+      class S,
+      typename std::enable_if<
+          std::is_base_of<sprite::State, typename std::pointer_traits<S>::element_type>::value,
+          int>::type = 0>
+  void redraw(const std::vector<S> &sprites) {
+    clear_draw();
+
+    for (S sprite : sprites) {
+      draw_sprite(deref(sprite).pos(), deref(sprite).radius());
+    }
+
+    update_draw();
+  }
 
 private:
   SDL_Window *window = nullptr;
   SDL_Renderer *renderer = nullptr;
 
   void clear_draw();
+  void update_draw();
+
+  void draw_sprite(const sprite::Position &pos, double radius);
 };
 
 } // namespace da

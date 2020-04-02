@@ -2,6 +2,8 @@
 
 #include <cmath>
 #include <iostream>
+#include <memory>
+#include <type_traits>
 
 namespace da {
 
@@ -84,5 +86,11 @@ template <typename T>
 bool operator==(const Vector2D<T> &a, const Vector2D<T> &b) {
   return a.x == b.x && a.y == b.y;
 }
+
+template <class T>
+typename std::pointer_traits<T>::element_type & deref(T t) { return *t; }
+
+template <class T, std::enable_if_t<std::is_reference_v<T>, int> = 0>
+T& deref(T &t) { return t; }
 
 } // namespace da

@@ -44,14 +44,7 @@ int main(void) {
 
     engine->next();
 
-    std::vector<const Sprite *> sprites;
-    for (const auto& sp : engine->sprites()) {
-      sprites.push_back(new Sprite(sp));
-    }
-    display->redraw(sprites);
-    for (auto sp : sprites) {
-      delete sp;
-    }
+    display->redraw(engine->sprites());
   }
 
   delete display;
