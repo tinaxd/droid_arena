@@ -3,17 +3,15 @@
 #include <SDL.h>
 #include <memory>
 
-namespace da::sprite
-{
-    
-class Texture
-{
+namespace da::sprite {
+
+class Texture {
 public:
-    explicit Texture(SDL_Texture *t);
-    ~Texture();
-    
+  explicit Texture(SDL_Texture *t);
+  ~Texture();
+
 private:
-    SDL_Texture *t_;
+  SDL_Texture *t_;
 };
-    
-}
+
+} // namespace da::sprite
