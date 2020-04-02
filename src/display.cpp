@@ -15,13 +15,13 @@ Display::Display(int width, int height) {
                             SDL_WINDOW_OPENGL); // SDL_WINDOW_ALLOW_HIGHDPI?
   if (window == nullptr) {
     throw DisplayError("failed to initialize SDL display");
-}
+  }
 
   renderer = SDL_CreateRenderer(
       window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (renderer == nullptr) {
     throw DisplayError("failed to create SDL renderer");
-}
+  }
 
   SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
 }
@@ -38,8 +38,7 @@ void Display::redraw(const std::vector<const Sprite *> &sprites) {
 
   for (auto sprite : sprites) {
     const auto &pos = sprite->state()->pos();
-    aacircleRGBA(renderer, pos.x, pos.y, 1, 100, 100, 0,
-               220);
+    aacircleRGBA(renderer, pos.x, pos.y, 1, 100, 100, 0, 220);
   }
 
   SDL_RenderPresent(renderer);

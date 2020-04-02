@@ -24,13 +24,13 @@ class Display {
 public:
   Display(int width = 1000, int height = 1000);
   ~Display();
-  
-  void redraw(const std::vector<const Sprite *>& sprites);
+
+  void redraw(const std::vector<const Sprite *> &sprites);
 
 private:
   SDL_Window *window = nullptr;
   SDL_Renderer *renderer = nullptr;
-  
+
   void clear_draw();
 };
 

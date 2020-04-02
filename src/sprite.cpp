@@ -50,7 +50,7 @@ double State::ang_speed() const { return ang_speed_; }
 double State::radius() const { return radius_; }
 
 SMState::SMState(Position init_pos, Velocity init_vel, Rotation init_rot,
-                 const InstructionSet& instset)
+                 const InstructionSet &instset)
     : State(init_pos, init_vel, init_rot), instset(instset) {
   assert(instset.instructions_count() != 0);
 }
@@ -61,7 +61,7 @@ void SMState::incr_inst_ptr() {
   inst_ptr++;
   if (inst_ptr >= instset.instructions_count()) {
     inst_ptr = 0;
-}
+  }
   inst_time = 0.0;
 }
 
@@ -191,9 +191,7 @@ void SMState::handle_rotate_to_enemy(QueryProxy &p) {
   }
 }
 
-void SMState::accumulate_deltatime(float deltatime) {
-  inst_time += deltatime;
-}
+void SMState::accumulate_deltatime(float deltatime) { inst_time += deltatime; }
 
 Texture::Texture(SDL_Texture *t) : t_(t) {}
 
@@ -205,21 +203,15 @@ namespace da {
 
 Sprite::Sprite(std::shared_ptr<State> state, std::shared_ptr<Texture> texture)
     : state_(std::move(state)), texture_(std::move(texture)) {}
-    
-const std::shared_ptr<Sprite::State> &Sprite::state() const {
-  return state_;
-}
+
+const std::shared_ptr<Sprite::State> &Sprite::state() const { return state_; }
 
 const std::shared_ptr<Sprite::Texture> &Sprite::texture() const {
   return texture_;
 }
 
-std::shared_ptr<Sprite::State> Sprite::state_mut() {
-  return state_;
-}
+std::shared_ptr<Sprite::State> Sprite::state_mut() { return state_; }
 
-std::shared_ptr<Sprite::Texture> Sprite::texture_mut() {
-  return texture_;
-}
+std::shared_ptr<Sprite::Texture> Sprite::texture_mut() { return texture_; }
 
 } // namespace da

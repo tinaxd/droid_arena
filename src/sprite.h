@@ -11,7 +11,8 @@ public:
   using State = sprite::State;
   using Texture = sprite::Texture;
 
-  Sprite(std::shared_ptr<State> state, std::shared_ptr<Texture> texture = nullptr);
+  Sprite(std::shared_ptr<State> state,
+         std::shared_ptr<Texture> texture = nullptr);
 
   bool deleted() const;
 

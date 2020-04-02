@@ -44,7 +44,7 @@ public:
   void add_special_instruction(std::unique_ptr<SpecialInstruction> special);
   void delete_special_instruction();
   size_t instructions_count() const;
-  
+
   Instruction at(size_t index) const;
 
   std::vector<Instruction> &instructions_mut();

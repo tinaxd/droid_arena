@@ -57,7 +57,7 @@ template <typename T> struct Vector2D {
 };
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const Vector2D<T>& v) {
+std::ostream &operator<<(std::ostream &os, const Vector2D<T> &v) {
   os << "(" << v.x << ", " << v.y << ")";
   return os;
 }

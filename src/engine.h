@@ -1,8 +1,8 @@
 #pragma once
 
+#include "sprite_state.h"
 #include <memory>
 #include <vector>
-#include "sprite_state.h"
 
 namespace da {
 
@@ -25,23 +25,23 @@ private:
   std::vector<std::shared_ptr<sprite::State>> sprites;
 
   uint32_t lasttick = 0;
-  
+
   mutable bool first = true;
-  
+
   friend Proxy;
-  friend void debug_engine_stdout_(const Engine& engine);
+  friend void debug_engine_stdout_(const Engine &engine);
 };
 
-void debug_engine_stdout_(const Engine& engine);
+void debug_engine_stdout_(const Engine &engine);
 
 class Proxy : public sprite::QueryProxy {
 public:
   explicit Proxy(Engine *engine);
   ~Proxy();
-  
+
   virtual std::vector<const sprite::State *> get_other_states();
   virtual void add(sprite::State *state);
-  
+
 private:
   Engine *engine;
 };

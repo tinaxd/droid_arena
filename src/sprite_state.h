@@ -44,7 +44,7 @@ public:
   double speed() const;
   double ang_speed() const;
   double radius() const;
-  
+
   int team() const;
   void set_team(int team);
 
@@ -65,7 +65,7 @@ private:
 class SMState : public State {
 public:
   SMState(Position init_pos, Velocity init_vel, Rotation init_rot,
-          const InstructionSet& instset);
+          const InstructionSet &instset);
   virtual ~SMState();
 
   virtual void step(float deltatime, QueryProxy &p) override;
@@ -88,7 +88,7 @@ private:
   void handle_move(Instruction direction);
   void handle_shoot(Instruction gun_type, QueryProxy &p);
   void handle_rotate_to_enemy(QueryProxy &p);
-  
+
   void accumulate_deltatime(float deltatime);
 };
 

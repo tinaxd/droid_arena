@@ -49,7 +49,7 @@ Proxy::~Proxy() {}
 
 std::vector<const sprite::State *> Proxy::get_other_states() {
   std::vector<const sprite::State *> states;
-  for (const auto& st : engine->sprites) {
+  for (const auto &st : engine->sprites) {
     states.push_back(st.get());
   }
   return states;
