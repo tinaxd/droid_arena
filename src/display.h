@@ -30,6 +30,8 @@ public:
 private:
   SDL_Window *window = nullptr;
   SDL_Renderer *renderer = nullptr;
+  
+  void clear_draw();
 };
 
 } // namespace da

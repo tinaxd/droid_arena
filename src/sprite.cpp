@@ -201,6 +201,22 @@ Texture::~Texture() { SDL_DestroyTexture(t_); }
 namespace da {
 
 Sprite::Sprite(std::shared_ptr<State> state, std::shared_ptr<Texture> texture)
-    : state(state), texture(texture) {}
+    : state_(state), texture_(texture) {}
+    
+const std::shared_ptr<Sprite::State> &Sprite::state() const {
+  return state_;
+}
+
+const std::shared_ptr<Sprite::Texture> &Sprite::texture() const {
+  return texture_;
+}
+
+std::shared_ptr<Sprite::State> Sprite::state_mut() {
+  return state_;
+}
+
+std::shared_ptr<Sprite::Texture> Sprite::texture_mut() {
+  return texture_;
+}
 
 } // namespace da

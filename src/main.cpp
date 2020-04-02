@@ -1,5 +1,7 @@
 #include "engine.h"
+#include "sprite.h"
 #include "util.h"
+#include "display.h"
 #include <SDL.h>
 #include <iostream>
 #include <memory>
@@ -17,21 +19,36 @@ int main(void) {
   sdl_init();
 
   Engine *engine = new Engine();
+  Display *display = new Display();
 
   using I = da::sprite::Instruction;
-  auto s = std::make_shared<sprite::SMState>(
+  auto state = std::make_shared<sprite::SMState>(
       Vector2D(0.0, 0.0), Vector2D(0.0, 0.0), 0.0,
       da::sprite::InstructionSet{I::FL, I::FR});
+  auto sprite = new Sprite(state);
+  
+  std::vector<const Sprite *> sprites{sprite};
 
-  engine->add_sprite(s);
-  for (int i = 0; i < 200; i++) {
+  engine->add_sprite(state);
+  
+  SDL_Event e;
+  bool quit = false;
+  while (!quit) {
+    while (SDL_PollEvent(&e) != 0) {
+      if (e.type == SDL_QUIT) {
+        quit = true;
+      }
+    }
+    
     engine->next();
-    std::cout << i << " ";
-    debug_engine_stdout_(*engine);
-    SDL_Delay(10);
+    //debug_engine_stdout_(*engine);
+    display->redraw(sprites);
   }
 
+  delete display;
   delete engine;
+  
+  SDL_Quit();
 
   return 0;
 }

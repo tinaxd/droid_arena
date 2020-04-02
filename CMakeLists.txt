@@ -10,4 +10,6 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     add_compile_options (-fcolor-diagnostics)
 endif ()
 
+set (CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,performance-*,clang-analyzer-*,boost-* -fix -fix-errors)
+
 add_subdirectory (src)

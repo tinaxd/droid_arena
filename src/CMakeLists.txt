@@ -8,6 +8,7 @@ add_executable (droidarena
   sprite.cpp
   sprite_instruction.cpp
   util.cpp
+  display.cpp
 )
 target_include_directories (droidarena PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries (droidarena ${SDL2_LIBRARIES})
+target_link_libraries (droidarena ${SDL2_LIBRARIES} ${SDL2_LIBRARIES}_gfx)

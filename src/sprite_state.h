@@ -44,6 +44,9 @@ public:
   double speed() const;
   double ang_speed() const;
   double radius() const;
+  
+  int team() const;
+  void set_team(int team);
 
 private:
   Position pos_;
@@ -55,6 +58,7 @@ private:
   double speed_ = 100.0;
   double ang_speed_ = M_PI / 6.0;
   double radius_ = 30.0;
+  int team_ = 0;
 };
 
 /// State-Machine State extension.
