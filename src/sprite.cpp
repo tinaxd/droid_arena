@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cassert>
 #include <stdexcept>
+#include <utility>
 
 namespace da::sprite {
 
@@ -34,7 +35,7 @@ const HP &State::hp() const { return hp_; }
 
 bool State::immortal() const { return std::get_if<int>(&hp_) == nullptr; }
 
-void State::step(float deltatime, QueryProxy &) {
+void State::step(float deltatime, QueryProxy & /*unused*/) {
   pos_ += vel_ * (double)deltatime;
 }
 
@@ -49,7 +50,7 @@ double State::ang_speed() const { return ang_speed_; }
 double State::radius() const { return radius_; }
 
 SMState::SMState(Position init_pos, Velocity init_vel, Rotation init_rot,
-                 InstructionSet instset)
+                 const InstructionSet& instset)
     : State(init_pos, init_vel, init_rot), instset(instset) {
   assert(instset.instructions_count() != 0);
 }
@@ -58,8 +59,9 @@ SMState::~SMState() {}
 
 void SMState::incr_inst_ptr() {
   inst_ptr++;
-  if (inst_ptr >= instset.instructions_count())
+  if (inst_ptr >= instset.instructions_count()) {
     inst_ptr = 0;
+}
   inst_time = 0.0;
 }
 
@@ -113,7 +115,8 @@ void SMState::step(float deltatime, QueryProxy &p) {
 }
 
 void SMState::handle_move(Instruction direction) {
-  int fb = 0, side = 0;
+  int fb = 0;
+  int side = 0;
   switch (direction) {
   case Instruction::F:
     fb++;
@@ -201,7 +204,7 @@ Texture::~Texture() { SDL_DestroyTexture(t_); }
 namespace da {
 
 Sprite::Sprite(std::shared_ptr<State> state, std::shared_ptr<Texture> texture)
-    : state_(state), texture_(texture) {}
+    : state_(std::move(state)), texture_(std::move(texture)) {}
     
 const std::shared_ptr<Sprite::State> &Sprite::state() const {
   return state_;

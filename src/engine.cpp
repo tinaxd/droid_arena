@@ -20,7 +20,7 @@ void Engine::next() {
 
   for (auto &sprite : sprites) {
     Proxy p(this);
-    sprite->step(static_cast<float>(difftick) / 1000.0f, p);
+    sprite->step(static_cast<float>(difftick) / 1000.0F, p);
   }
 
   // remove deleted sprite states.
@@ -49,7 +49,7 @@ Proxy::~Proxy() {}
 
 std::vector<const sprite::State *> Proxy::get_other_states() {
   std::vector<const sprite::State *> states;
-  for (auto st : engine->sprites) {
+  for (const auto& st : engine->sprites) {
     states.push_back(st.get());
   }
   return states;

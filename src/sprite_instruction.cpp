@@ -11,7 +11,7 @@ InstructionSet::InstructionSet(std::vector<Instruction> instructions,
 
 InstructionSet::InstructionSet(const InstructionSet &s)
     : instructions_(s.instructions()),
-      special(std::unique_ptr<SpecialInstruction>(&*s.special.get())) {}
+      special(std::unique_ptr<SpecialInstruction>(&*s.special)) {}
 
 InstructionSet::InstructionSet(std::initializer_list<Instruction> il)
     : InstructionSet(std::vector<Instruction>(il.begin(), il.end()), nullptr) {

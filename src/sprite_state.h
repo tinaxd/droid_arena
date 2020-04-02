@@ -65,7 +65,7 @@ private:
 class SMState : public State {
 public:
   SMState(Position init_pos, Velocity init_vel, Rotation init_rot,
-          InstructionSet instset);
+          const InstructionSet& instset);
   virtual ~SMState();
 
   virtual void step(float deltatime, QueryProxy &p) override;

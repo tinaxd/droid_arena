@@ -6,6 +6,6 @@ template <> int zero() { return 0; }
 
 template <> double zero() { return 0.0; }
 
-template <> float zero() { return 0.0f; }
+template <> float zero() { return 0.0F; }
 
 } // namespace da

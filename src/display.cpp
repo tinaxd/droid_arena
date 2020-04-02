@@ -13,13 +13,15 @@ Display::Display(int width, int height) {
   window = SDL_CreateWindow("droid_arena viewer", SDL_WINDOWPOS_UNDEFINED,
                             SDL_WINDOWPOS_UNDEFINED, width, height,
                             SDL_WINDOW_OPENGL); // SDL_WINDOW_ALLOW_HIGHDPI?
-  if (!window)
+  if (window == nullptr) {
     throw DisplayError("failed to initialize SDL display");
+}
 
   renderer = SDL_CreateRenderer(
       window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-  if (!renderer)
+  if (renderer == nullptr) {
     throw DisplayError("failed to create SDL renderer");
+}
 
   SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
 }
