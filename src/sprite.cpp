@@ -37,6 +37,7 @@ bool State::immortal() const { return std::get_if<int>(&hp_) == nullptr; }
 
 void State::step(float deltatime, QueryProxy & /*unused*/) {
   pos_ += vel_ * (double)deltatime;
+  rot_ += ang_vel_ * (double)deltatime;
 }
 
 bool State::deleted() const { return deleted_; }
@@ -63,6 +64,7 @@ void SMState::incr_inst_ptr() {
     inst_ptr = 0;
   }
   inst_time = 0.0;
+  shot_number = 0;
 }
 
 void SMState::set_current_inst() {
@@ -161,11 +163,13 @@ void SMState::handle_shoot(Instruction gun_type, QueryProxy &p) {
   // instantiate gun
   // QueryProxy.add(gun)
   // TODO: make gun variations
-  const auto shot_speed = 200.0;
-  const Vector2D my_dir(1.0 * sin(rot()) + 1.0 * cos(rot()),
-                        1.0 * cos(rot()) - 1.0 * sin(rot()));
-  auto *shot = new State(pos(), my_dir * shot_speed);
-  p.add(shot);
+  if (shot_number == 0) {
+    const auto shot_speed = 600.0;
+    const Vector2D my_dir(sin(rot()), cos(rot()));
+    auto *shot = new State(pos(), my_dir * shot_speed);
+    p.add(shot);
+    shot_number++;
+  }
 }
 
 void SMState::handle_rotate_to_enemy(QueryProxy &p) {

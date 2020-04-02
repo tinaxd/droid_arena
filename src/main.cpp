@@ -23,13 +23,15 @@ int main(void) {
 
   using I = da::sprite::Instruction;
   auto state = std::make_shared<sprite::SMState>(
-      Vector2D(0.0, 0.0), Vector2D(0.0, 0.0), 0.0,
-      da::sprite::InstructionSet{I::FL, I::FR});
-  auto sprite = new Sprite(state);
-
-  std::vector<const Sprite *> sprites{sprite};
+      Vector2D(500.0, 800.0), Vector2D(0.0, 0.0), M_PI,
+      da::sprite::InstructionSet{I::FL, I::F, I::ShootGun});
+  
+  auto state2 = std::make_shared<sprite::SMState>(
+      Vector2D(500.0, 100.0), Vector2D(0.0, 0.0), 0.0,
+      da::sprite::InstructionSet{I::FL, I::F, I::ShootGun});
 
   engine->add_sprite(state);
+  engine->add_sprite(state2);
 
   SDL_Event e;
   bool quit = false;
@@ -41,8 +43,15 @@ int main(void) {
     }
 
     engine->next();
-    // debug_engine_stdout_(*engine);
+
+    std::vector<const Sprite *> sprites;
+    for (const auto& sp : engine->sprites()) {
+      sprites.push_back(new Sprite(sp));
+    }
     display->redraw(sprites);
+    for (auto sp : sprites) {
+      delete sp;
+    }
   }
 
   delete display;

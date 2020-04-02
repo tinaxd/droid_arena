@@ -81,6 +81,7 @@ private:
   void set_current_inst();
   /// Elapsed time since the current instruction started.
   float inst_time = 0.0f;
+  unsigned int shot_number = 0;
   /// If inst_time reaches this time, increment instruction pointer.
   std::optional<float> inst_limit_time;
   void update_inst_limit_time();

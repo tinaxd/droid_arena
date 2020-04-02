@@ -20,9 +20,11 @@ public:
   void next();
 
   void add_sprite(std::shared_ptr<sprite::State> sprite);
+  
+  const std::vector<std::shared_ptr<sprite::State>>& sprites() const;
 
 private:
-  std::vector<std::shared_ptr<sprite::State>> sprites;
+  std::vector<std::shared_ptr<sprite::State>> sprites_;
 
   uint32_t lasttick = 0;
 
@@ -33,17 +35,5 @@ private:
 };
 
 void debug_engine_stdout_(const Engine &engine);
-
-class Proxy : public sprite::QueryProxy {
-public:
-  explicit Proxy(Engine *engine);
-  ~Proxy();
-
-  virtual std::vector<const sprite::State *> get_other_states();
-  virtual void add(sprite::State *state);
-
-private:
-  Engine *engine;
-};
 
 } // namespace da

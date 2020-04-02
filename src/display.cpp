@@ -38,12 +38,24 @@ void Display::redraw(const std::vector<const Sprite *> &sprites) {
 
   for (auto sprite : sprites) {
     const auto &pos = sprite->state()->pos();
-    aacircleRGBA(renderer, pos.x, pos.y, 1, 100, 100, 0, 220);
+    const auto radius = sprite->state()->radius();
+    SDL_FRect rect;
+    rect.x = pos.x - radius;
+    rect.y = pos.y - radius;
+    rect.w = 2 * radius;
+    rect.h = 2 * radius;
+    SDL_SetRenderDrawColor(renderer, 100, 100, 0, 200);
+    SDL_RenderFillRectF(renderer, &rect);
+    
+    // TODO: draw a marker so that we can know in which direction a sprte is standing.
   }
 
   SDL_RenderPresent(renderer);
 }
 
-void Display::clear_draw() { SDL_RenderClear(renderer); }
+void Display::clear_draw() {
+  SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
+  SDL_RenderClear(renderer);
+}
 
 } // namespace da
