@@ -1,0 +1,9 @@
+project
+	: requirements <cxxstd>17 ;
+
+local sdl_includes = [ SHELL "sdl2-config --cflags | tr -d '\n'" ] ;
+local sdl_libraries = [ SHELL "sdl2-config --libs | tr -d '\n'" ] ;
+
+exe droid_arena
+	: [ glob src/*.cpp ]
+	: <cxxflags>$(sdl_includes) <linkflags>$(sdl_libraries) ;
